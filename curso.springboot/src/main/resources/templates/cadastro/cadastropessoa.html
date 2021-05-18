@@ -4,6 +4,11 @@
 
 <head>
 	<meta charset="UTF-8">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link type="text/css" rel="stylesheet" href="materialize/css/materialize.css" media="screen,projection" />
+	<link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css" media="screen,projection" />
+
+
 </head>
 
 <body>
@@ -14,18 +19,34 @@
 		<input name="email">
 		<label>Idade</label>
 		<input name="idade" type="number">
-		<input type="submit" value="Salvar">
+		<input class="btn waves-effect waves-light" type="submit" value="Salvar"> </input>
 	</form>
 
 	<a href="/listapessoas">Lista</a>
-	<table>
-		<tr th:each="pessoa : ${pessoas}">
-			<td th:text="${pessoa.id}"></td>
-			<td th:text="${pessoa.nome}"></td>
-			<td th:text = "${pessoa.email}"></td>
-		</tr>
+	<table class="striped">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Nome</th>
+				<th>Email</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="pessoa : ${pessoas}">
+				<td th:text="${pessoa.id}"></td>
+				<td th:text="${pessoa.nome}"></td>
+				<td th:text="${pessoa.email}"></td>
+			</tr>
+
+		</tbody>
+
 
 	</table>
+
+
+	<script type="text/javascript" src="materialize/js/materialize.js"></script>
+	<script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+
 
 </body>
 
