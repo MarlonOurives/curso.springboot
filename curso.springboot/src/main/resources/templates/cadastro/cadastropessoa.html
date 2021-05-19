@@ -5,20 +5,22 @@
 <head>
 	<meta charset="UTF-8">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	<link type="text/css" rel="stylesheet" href="materialize/css/materialize.css" media="screen,projection" />
-	<link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css" media="screen,projection" />
+	<link type="text/css" rel="stylesheet" href="/materialize/css/materialize.css" media="screen,projection" />
+	<link type="text/css" rel="stylesheet" href="/materialize/css/materialize.min.css" media="screen,projection" />
 
 
 </head>
 
 <body>
-	<form action="salvarpessoa" method="POST">
+	<form action="salvarpessoa" method="POST" th:object="${pessoaobj}">
+		<label>ID</label>
+		<input name="id" th:field="*{id}" readonly="readonly"></input>
 		<label>Nome</label>
-		<input name="nome">
+		<input name="nome" th:field="*{nome}">
 		<label>Email</label>
-		<input name="email">
+		<input name="email" th:field="*{email}">
 		<label>Idade</label>
-		<input name="idade" type="number">
+		<input name="idade" type="number" th:field="*{idade}">
 		<input class="btn waves-effect waves-light" type="submit" value="Salvar"> </input>
 	</form>
 
@@ -29,6 +31,8 @@
 				<th>Id</th>
 				<th>Nome</th>
 				<th>Email</th>
+				<th>Idade</th>
+				<th>Editar</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -36,6 +40,8 @@
 				<td th:text="${pessoa.id}"></td>
 				<td th:text="${pessoa.nome}"></td>
 				<td th:text="${pessoa.email}"></td>
+				<td th:text="${pessoa.idade}"></td>
+				<td><a th:href="@{/editarpessoa/{idpessoa}(idpessoa=${pessoa.id})}">Editar</a></td>
 			</tr>
 
 		</tbody>
