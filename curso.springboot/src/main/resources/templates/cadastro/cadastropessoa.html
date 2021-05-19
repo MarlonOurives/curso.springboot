@@ -23,8 +23,15 @@
 		<input name="idade" type="number" th:field="*{idade}">
 		<input class="btn waves-effect waves-light" type="submit" value="Salvar"> </input>
 	</form>
-
-	<a href="/listapessoas">Lista</a>
+	<br/>
+	<a href="/listapessoas"  class="btn waves-effect waves-light">Listar</a>
+	<br/>
+	<br/>
+	<form action="pesquisarpessoa" method="POST">
+	<label>Pesquisa por nome:</label>
+	<input name="nomepesquisa"></input>
+	<input type="submit" value="Buscar" class="btn waves-effect waves-light"></input>
+	</form>
 	<table class="striped">
 		<thead>
 			<tr>
@@ -45,12 +52,8 @@
 				<td th:text="${pessoa.idade}"></td>
 				<td><a th:href="@{/editarpessoa/{idpessoa}(idpessoa=${pessoa.id})}">Editar</a></td>
 				<td><a th:href="@{/removerpessoa/{idpessoa}(idpessoa=${pessoa.id})}">Excluir</a></td>
-
 			</tr>
-
 		</tbody>
-
-
 	</table>
 
 
