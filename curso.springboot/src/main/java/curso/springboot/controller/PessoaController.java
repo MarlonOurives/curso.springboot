@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,6 +23,8 @@ public class PessoaController {
 	public ModelAndView inicio() {
 		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
 		modelAndView.addObject("pessoaobj", new Pessoa());
+		Iterable<Pessoa> pessoasIt = pessoaRepository.findAll();
+		modelAndView.addObject("pessoas", pessoasIt);
 		return modelAndView;
 	}
 
@@ -74,5 +75,14 @@ public class PessoaController {
 		modelAndView.addObject("pessoas", pessoaRepository.findPessoaByName(nomepesquisa));
 		modelAndView.addObject("pessoaobj", new Pessoa());
 		return modelAndView;	
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/telefones/{idpessoa}")
+	public ModelAndView telefones(@PathVariable("idpessoa") Long idpessoa) {
+		Optional<Pessoa> pessoa = pessoaRepository.findById(idpessoa);
+
+		ModelAndView modelAndView = new ModelAndView("cadastro/telefones");
+		modelAndView.addObject("pessoaobj", pessoa.get());
+		return modelAndView;
 	}
 }
