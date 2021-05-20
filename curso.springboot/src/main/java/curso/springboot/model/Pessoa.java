@@ -9,6 +9,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Pessoa implements Serializable{
@@ -18,8 +21,16 @@ public class Pessoa implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+	
+	@NotEmpty(message = "Digite o nome")
+	@NotNull(message = "Digite o nome")
 	private String nome;
+	
+	@NotEmpty(message = "Digite o email")
+	@NotNull(message = "Digite o email")
 	private String email;
+	
+	@Min(value = 1, message = "Idade minima de 1 ano")
 	private int idade;
 	
 	@OneToMany(mappedBy = "pessoa", orphanRemoval = true, cascade = CascadeType.ALL)
