@@ -29,8 +29,15 @@
 	</div>
 
 	<h5>Telefones</h5>
+
+	<br />
+	<div th:each="m : ${msg}">
+		<span th:text="${m}"></span>
+	</div>
+	<br />
 	<div class="row">
-		<form th:action="@{/addFonePessoa/{pessoaid}(pessoaid=${pessoaobj.id})}" method="POST" class="col s12">
+		<form th:action="@{/addFonePessoa/{pessoaid}(pessoaid=${pessoaobj.id})}" method="POST" class="col s12"
+			onsubmit="return validarCampos()?true : false;">
 			<div class="row">
 				<div class="input-field col s6">
 					<label class="active" for="numero">Número:</label>
@@ -50,12 +57,14 @@
 			<td th:text="${fone.numero}"></td>
 			<td th:text="${fone.tipo}"></td>
 			<td><a th:href="@{/removerTelefone/{idtelefone}(idtelefone=${fone.id})}"
-						class="waves-effect waves-light btn"> Excluir</a></td>
+					class="waves-effect waves-light btn"> Excluir</a></td>
 		</tr>
 	</table>
 
 	<script type="text/javascript" src="/materialize/js/materialize.js"></script>
 	<script type="text/javascript" src="/materialize/js/materialize.min.js"></script>
+	<script type="text/javascript" src="/js/telefones.js"></script>
+
 
 
 </body>

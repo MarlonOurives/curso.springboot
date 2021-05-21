@@ -41,14 +41,14 @@ public class PessoaController {
 
 	@RequestMapping(method = RequestMethod.POST, value = "**/salvarpessoa")
 	public ModelAndView salvar(@Valid Pessoa pessoa, BindingResult bindingResult) {
-		
-		if(bindingResult.hasErrors()) {
+
+		if (bindingResult.hasErrors()) {
 			ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
 			Iterable<Pessoa> pessoaIterable = pessoaRepository.findAll();
 			modelAndView.addObject("pessoas", pessoaIterable);
 			modelAndView.addObject("pessoaobj", pessoa);
 			List<String> msg = new ArrayList<String>();
-			for(ObjectError objectError : bindingResult.getAllErrors()) {
+			for (ObjectError objectError : bindingResult.getAllErrors()) {
 				msg.add(objectError.getDefaultMessage());
 			}
 			modelAndView.addObject("msg", msg);
@@ -112,8 +112,26 @@ public class PessoaController {
 
 	@RequestMapping(method = RequestMethod.POST, value = "**/addFonePessoa/{pessoaid}")
 	public ModelAndView addFonePessoa(Telefone telefone, @PathVariable("pessoaid") Long pessoaid) {
-		
+
 		Pessoa pessoa = pessoaRepository.findById(pessoaid).get();
+
+		if (telefone != null && telefone.getNumero().isEmpty() || telefone.getTipo().isEmpty()) {
+			ModelAndView modelAndView = new ModelAndView("cadastro/telefones");
+			modelAndView.addObject("pessoaobj", pessoa);
+			modelAndView.addObject("telefones", telefoneRepository.getTelefones(pessoaid));
+			List<String> msg = new ArrayList<String>();
+			if(telefone.getNumero().isEmpty()) {
+				msg.add("Número deve ser informado");
+			}
+			if(telefone.getTipo().isEmpty()) {
+				msg.add("Tipo deve ser informado");
+			}
+			modelAndView.addObject("msg", msg);
+
+			return modelAndView;
+
+		}
+
 		telefone.setPessoa(pessoa);
 		telefoneRepository.save(telefone);
 		ModelAndView modelAndView = new ModelAndView("cadastro/telefones");
@@ -121,12 +139,13 @@ public class PessoaController {
 		modelAndView.addObject("telefones", telefoneRepository.getTelefones(pessoaid));
 		return modelAndView;
 	}
+
 	@RequestMapping(method = RequestMethod.GET, value = "/removerTelefone/{idtelefone}")
 	public ModelAndView removerTelefone(@PathVariable("idtelefone") Long idtelefone) {
 
 		Pessoa pessoa = telefoneRepository.findById(idtelefone).get().getPessoa();
 		telefoneRepository.deleteById(idtelefone);
-		
+
 		ModelAndView modelAndView = new ModelAndView("cadastro/telefones");
 		modelAndView.addObject("pessoaobj", pessoa);
 		modelAndView.addObject("telefones", telefoneRepository.getTelefones(pessoa.getId()));
