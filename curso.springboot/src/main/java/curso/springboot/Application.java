@@ -19,11 +19,12 @@ public class Application {
 		SpringApplication.run(Application.class, args);
 		
 		
-		/* criptografando a senha do usuário
+		/*criptografando a senha do usuário
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		String result = encoder.encode("321");
+		String result = encoder.encode("123");
 		System.out.println(result);
 		*/
+		
 	}
 
 }
