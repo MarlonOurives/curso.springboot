@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.thymeleaf.org ">
+	xsi:schemaLocation="http://www.thymeleaf.org "
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security ">
 
 <head>
 	<meta charset="UTF-8">
@@ -23,7 +24,7 @@
 	<div class="row">
 		<form action="salvarpessoa" id="formpessoa" method="POST" th:object="${pessoaobj}" class="col s12">
 			<div class="row">
-				<div class="input-field col s6">
+				<div class="input-field col s6" sec:authorize="hasRole('ROLE_ADMIN')">
 					<label id="id" class="active">ID</label>
 					<input name="id" th:field="*{id}" readonly="readonly" id="id" class="validate" />
 				</div>
@@ -37,7 +38,7 @@
 					<label id="email" class="active">Email</label>
 					<input name="email" th:field="*{email}" id="email" class="validate" />
 				</div>
-				<div class="input-field col s6">
+				<div class="input-field col s6" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_GERENTE')">
 					<label id="idade" class="active">Idade</label>
 					<input name="idade" type="number" th:field="*{idade}" id="idade" class="validate">
 				</div>
